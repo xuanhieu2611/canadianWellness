@@ -109,6 +109,7 @@ export default function Home() {
 
   return (
     <>
+      <div className="grain-overlay" aria-hidden />
       <Navbar />
       <main>
         <HeroSection />
@@ -140,76 +141,75 @@ function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-white/95 shadow-sm backdrop-blur-sm"
+          ? "bg-ivory/90 shadow-[0_1px_0_rgba(26,26,26,0.06)] backdrop-blur-md"
           : "bg-transparent"
       }`}
     >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-8">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-5 py-4 md:px-10">
         <a
           href="#"
-          className="font-heading text-xl font-semibold tracking-wide text-charcoal md:text-2xl"
+          className="font-heading text-2xl tracking-[0.02em] text-charcoal md:text-3xl"
         >
           Canadian Wellness &amp; Beauty
         </a>
 
-        {/* Desktop links */}
-        <div className="hidden items-center gap-8 md:flex">
+        <div className="hidden items-center gap-10 md:flex">
           {navLinks.map((l) => (
             <a
               key={l.label}
               href={l.href}
-              className="text-sm font-medium text-muted transition-colors hover:text-charcoal"
+              className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-charcoal"
             >
               {l.label}
             </a>
           ))}
           <a
             href="#booking"
-            className="pulse-cta rounded-full bg-gold px-6 py-2.5 text-sm font-semibold text-white transition-transform hover:scale-105"
+            className="pulse-cta rounded-full border border-gold bg-gold px-6 py-2.5 text-sm font-semibold tracking-wide text-white transition-all duration-300 hover:scale-[1.02] hover:border-gold-light"
           >
             Book Now
           </a>
         </div>
 
-        {/* Mobile hamburger */}
         <button
           aria-label="Toggle menu"
           className="flex flex-col gap-1.5 md:hidden"
           onClick={() => setMobileOpen((v) => !v)}
         >
           <span
-            className={`block h-0.5 w-6 bg-charcoal transition-transform ${
+            className={`block h-px w-6 bg-charcoal transition-all duration-300 ${
               mobileOpen ? "translate-y-2 rotate-45" : ""
             }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-charcoal transition-opacity ${
+            className={`block h-px w-6 bg-charcoal transition-opacity duration-300 ${
               mobileOpen ? "opacity-0" : ""
             }`}
           />
           <span
-            className={`block h-0.5 w-6 bg-charcoal transition-transform ${
+            className={`block h-px w-6 bg-charcoal transition-all duration-300 ${
               mobileOpen ? "-translate-y-2 -rotate-45" : ""
             }`}
           />
         </button>
       </nav>
 
-      {/* Mobile menu */}
       <div
-        className={`overflow-hidden transition-all duration-300 md:hidden ${
-          mobileOpen ? "max-h-80 border-b border-blush/30 bg-white" : "max-h-0"
+        className={`overflow-hidden transition-all duration-500 ease-out md:hidden ${
+          mobileOpen
+            ? "max-h-80 border-b border-charcoal/5 bg-ivory/98 backdrop-blur-md"
+            : "max-h-0"
         }`}
       >
-        <div className="flex flex-col gap-4 px-5 pb-6 pt-2">
+        <div className="flex flex-col gap-5 px-5 pb-8 pt-4">
           {navLinks.map((l) => (
             <a
               key={l.label}
               href={l.href}
               onClick={() => setMobileOpen(false)}
-              className="text-sm font-medium text-muted transition-colors hover:text-charcoal"
+              className="text-sm font-medium tracking-wide text-muted transition-colors hover:text-charcoal"
             >
               {l.label}
             </a>
@@ -217,7 +217,7 @@ function Navbar() {
           <a
             href="#booking"
             onClick={() => setMobileOpen(false)}
-            className="mt-2 inline-block rounded-full bg-gold px-6 py-2.5 text-center text-sm font-semibold text-white"
+            className="mt-2 inline-block rounded-full border border-gold bg-gold px-6 py-3 text-center text-sm font-semibold tracking-wide text-white"
           >
             Book Now
           </a>
@@ -239,41 +239,81 @@ function HeroSection() {
     <section
       id="hero"
       className="relative flex min-h-screen items-center justify-center overflow-hidden"
-      style={{
-        background: "linear-gradient(135deg, #D4B8A0 0%, #FAF7F4 60%, #FAF7F4 100%)",
-      }}
     >
-      {/* Decorative circles */}
-      <div className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-blush/20" />
-      <div className="pointer-events-none absolute -bottom-24 -left-24 h-72 w-72 rounded-full bg-gold/10" />
+      {/* Layered gradient background */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background:
+            "linear-gradient(165deg, #F5F2ED 0%, #EDE8E0 35%, #E8E2D8 70%, #D4B8A0 100%)",
+        }}
+      />
+      {/* Organic blob shapes */}
+      <div className="pointer-events-none absolute -right-40 -top-40 h-[500px] w-[500px] rounded-full bg-blush/25 blur-3xl" />
+      <div className="pointer-events-none absolute -bottom-32 -left-32 h-80 w-80 rounded-full bg-gold/15 blur-2xl" />
+      <div className="pointer-events-none absolute right-1/4 top-1/3 h-64 w-64 rounded-full bg-blush/10 blur-2xl" />
+
+      {/* Diagonal accent line - editorial touch */}
+      <div
+        className="pointer-events-none absolute bottom-0 left-0 right-0 h-px opacity-30"
+        style={{
+          background:
+            "linear-gradient(90deg, transparent 0%, #B8956B 20%, #B8956B 80%, transparent 100%)",
+        }}
+      />
 
       <div
-        className={`relative z-10 mx-auto max-w-3xl px-5 text-center transition-all duration-1000 ${
-          loaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+        className={`relative z-10 mx-auto max-w-4xl px-6 text-center transition-all duration-1000 ease-out md:px-10 ${
+          loaded ? "translate-y-0 opacity-100" : "translate-y-12 opacity-0"
         }`}
       >
-        <h1 className="font-heading text-4xl font-semibold leading-tight text-charcoal sm:text-5xl md:text-6xl lg:text-7xl">
-          Your Journey to Radiant Beauty Starts Here
-        </h1>
-        <p className="mx-auto mt-5 max-w-xl text-base text-muted sm:text-lg md:mt-6">
-          Professional skincare, laser treatments &amp; wellness services in the
-          heart of Burnaby, BC
+        <p
+          className={`mb-6 text-xs font-medium uppercase tracking-[0.3em] text-muted transition-all duration-1000 delay-200 ${
+            loaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+        >
+          Burnaby, BC
         </p>
-        <div className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+        <h1
+          className={`font-heading text-5xl font-normal leading-[1.1] tracking-tight text-charcoal sm:text-6xl md:text-7xl lg:text-8xl transition-all duration-1000 delay-100 ${
+            loaded ? "translate-y-0 opacity-100" : "translate-y-8 opacity-0"
+          }`}
+        >
+          Your Journey to
+          <br />
+          <span className="text-gold">Radiant Beauty</span>
+        </h1>
+        <p
+          className={`mx-auto mt-8 max-w-lg text-base leading-relaxed text-muted sm:text-lg transition-all duration-1000 delay-300 ${
+            loaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
+          Professional skincare, laser treatments &amp; wellness services in the
+          heart of Burnaby
+        </p>
+        <div
+          className={`mt-12 flex flex-col items-center gap-4 sm:flex-row sm:justify-center transition-all duration-1000 delay-500 ${
+            loaded ? "translate-y-0 opacity-100" : "translate-y-6 opacity-0"
+          }`}
+        >
           <a
             href="#booking"
-            className="rounded-full bg-gold px-8 py-3.5 text-sm font-semibold text-white shadow-lg transition-transform hover:scale-105"
+            className="rounded-full bg-charcoal px-10 py-4 text-sm font-semibold tracking-wide text-ivory shadow-xl transition-all duration-300 hover:scale-[1.02] hover:bg-gold hover:shadow-2xl"
           >
             Book Your First Visit
           </a>
           <a
             href="#services"
-            className="rounded-full border-2 border-gold px-8 py-3.5 text-sm font-semibold text-gold transition-colors hover:bg-gold hover:text-white"
+            className="rounded-full border-2 border-charcoal px-10 py-4 text-sm font-semibold tracking-wide text-charcoal transition-all duration-300 hover:bg-charcoal hover:text-ivory"
           >
             Explore Services
           </a>
         </div>
-        <div className="mt-6 inline-block rounded-full bg-white/70 px-5 py-2 text-sm font-medium text-charcoal backdrop-blur">
+        <div
+          className={`mt-10 inline-block rounded-full border border-gold/40 bg-ivory/80 px-6 py-2.5 text-sm font-medium text-charcoal backdrop-blur-sm transition-all duration-1000 delay-700 ${
+            loaded ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+        >
           ✨ 50% OFF Your First Visit
         </div>
       </div>
@@ -305,15 +345,24 @@ function IntroStrip() {
   ];
 
   return (
-    <section className="bg-white py-16 md:py-20">
-      <div className="stagger-children mx-auto grid max-w-6xl gap-8 px-5 sm:grid-cols-3 md:px-8">
+    <section className="relative overflow-hidden bg-charcoal py-20 md:py-28">
+      {/* Subtle grid pattern */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-[0.03]"
+        style={{
+          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundSize: "48px 48px",
+        }}
+      />
+      <div className="stagger-children relative z-10 mx-auto grid max-w-6xl gap-12 px-6 sm:grid-cols-3 md:px-10">
         {items.map((item) => (
           <div key={item.title} className="text-center">
             <span className="text-4xl">{item.icon}</span>
-            <h3 className="mt-4 font-heading text-xl font-semibold text-charcoal">
+            <h3 className="mt-6 font-heading text-2xl font-normal tracking-tight text-ivory">
               {item.title}
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-muted">
+            <p className="mt-3 text-sm leading-relaxed text-white/60">
               {item.text}
             </p>
           </div>
@@ -329,39 +378,44 @@ function IntroStrip() {
 
 function ServicesSection() {
   return (
-    <section id="services" className="scroll-mt-20 bg-cream py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
-        <div className="animate-on-scroll text-center">
-          <h2 className="font-heading text-3xl font-semibold text-charcoal sm:text-4xl">
+    <section id="services" className="scroll-mt-20 bg-cream py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
+        <div className="animate-on-scroll max-w-2xl">
+          <p className="text-xs font-medium uppercase tracking-[0.25em] text-muted">
+            What we offer
+          </p>
+          <h2 className="mt-4 font-heading text-4xl font-normal tracking-tight text-charcoal sm:text-5xl">
             Our Services
           </h2>
-          <p className="mt-3 text-muted">
+          <p className="mt-6 text-muted">
             Everything you need to look and feel your best
           </p>
         </div>
 
-        <div className="stagger-children mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="stagger-children mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
             <div
               key={s.name}
-              className="group rounded-2xl border border-transparent bg-white p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-gold/40 hover:shadow-md"
+              className="group relative overflow-hidden rounded-2xl border border-charcoal/5 bg-white p-8 shadow-[0_2px_20px_-5px_rgba(26,26,26,0.08)] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_20px_40px_-15px_rgba(26,26,26,0.12)] hover:border-gold/20"
             >
               <span className="text-3xl">{s.icon}</span>
-              <h3 className="mt-4 font-heading text-xl font-semibold text-charcoal">
+              <h3 className="mt-6 font-heading text-xl font-normal tracking-tight text-charcoal">
                 {s.name}
               </h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted">
+              <p className="mt-3 text-sm leading-relaxed text-muted">
                 {s.description}
               </p>
-              {/* TODO: Update prices as needed */}
-              <p className="mt-4 text-sm font-semibold text-gold">
+              <p className="mt-6 text-sm font-semibold tracking-wide text-gold">
                 Starting at {s.price}
               </p>
               <a
                 href="#booking"
-                className="mt-3 inline-block text-sm font-medium text-gold underline-offset-4 transition-colors hover:underline"
+                className="mt-4 inline-flex items-center gap-2 text-sm font-medium text-gold transition-all duration-300 hover:gap-3"
               >
-                Book Now →
+                Book Now
+                <span className="transition-transform duration-300 group-hover:translate-x-1">
+                  →
+                </span>
               </a>
             </div>
           ))}
@@ -387,7 +441,7 @@ function PromoBanner() {
         0,
         Math.min(1, 1 - rect.top / window.innerHeight)
       );
-      setScale(1 + ratio * 0.03);
+      setScale(1 + ratio * 0.02);
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -396,26 +450,34 @@ function PromoBanner() {
   return (
     <section
       ref={ref}
-      className="relative overflow-hidden py-20 md:py-28"
+      className="relative overflow-hidden py-24 md:py-32"
       style={{
-        background: "linear-gradient(135deg, #C9A882, #D4B8A0)",
+        background:
+          "linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1a1a1a 100%)",
         transform: `scale(${scale})`,
       }}
     >
-      <div className="animate-on-scroll relative z-10 mx-auto max-w-3xl px-5 text-center md:px-8">
-        <h2 className="font-heading text-3xl font-bold text-white sm:text-4xl md:text-5xl">
+      {/* Gold accent gradient */}
+      <div
+        className="pointer-events-none absolute inset-0 opacity-20"
+        style={{
+          background:
+            "radial-gradient(ellipse 80% 50% at 50% 50%, #B8956B 0%, transparent 70%)",
+        }}
+      />
+      <div className="animate-on-scroll relative z-10 mx-auto max-w-3xl px-6 text-center md:px-10">
+        <h2 className="font-heading text-4xl font-normal tracking-tight text-ivory sm:text-5xl md:text-6xl">
           50% OFF Your First Visit
         </h2>
-        <p className="mt-4 text-base text-white/90 sm:text-lg">
-          Book today and experience the Canadian Wellness &amp; Beauty
-          difference at half the price.
+        <p className="mt-6 text-base leading-relaxed text-white/80 sm:text-lg">
+          Book today and experience the Canadian Wellness &amp; Beauty difference
+          at half the price.
         </p>
-        {/* TODO: Add Calendly URL */}
         <a
           href="https://calendly.com/welcome2wellness"
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-block rounded-full bg-white px-8 py-3.5 text-sm font-semibold text-gold shadow-lg transition-transform hover:scale-105"
+          className="mt-10 inline-block rounded-full border-2 border-gold bg-gold px-10 py-4 text-sm font-semibold tracking-wide text-white shadow-xl transition-all duration-300 hover:scale-[1.02] hover:border-gold-light hover:shadow-2xl"
         >
           Claim Your Discount
         </a>
@@ -430,35 +492,37 @@ function PromoBanner() {
 
 function ReviewsSection() {
   return (
-    <section id="reviews" className="scroll-mt-20 bg-white py-20 md:py-28">
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
+    <section id="reviews" className="scroll-mt-20 bg-ivory py-24 md:py-32">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
         <div className="animate-on-scroll text-center">
-          <h2 className="font-heading text-3xl font-semibold text-charcoal sm:text-4xl">
+          <p className="text-xs font-medium uppercase tracking-[0.25em] text-muted">
+            Testimonials
+          </p>
+          <h2 className="mt-4 font-heading text-4xl font-normal tracking-tight text-charcoal sm:text-5xl">
             What Our Clients Say
           </h2>
-          <div className="mt-4 flex items-center justify-center gap-2">
+          <div className="mt-6 flex items-center justify-center gap-3">
             <Stars />
-            <span className="rounded-full bg-cream px-3 py-1 text-xs font-semibold text-gold">
+            <span className="rounded-full border border-gold/30 bg-cream px-4 py-1.5 text-xs font-semibold tracking-wide text-gold">
               5.0 on Google
             </span>
           </div>
         </div>
 
-        {/* Desktop grid / mobile horizontal scroll */}
-        <div className="no-scrollbar mt-12 flex gap-6 overflow-x-auto pb-4 lg:grid lg:grid-cols-3 lg:overflow-visible">
+        <div className="no-scrollbar mt-16 flex gap-8 overflow-x-auto pb-6 lg:grid lg:grid-cols-3 lg:overflow-visible">
           {reviews.map((r, i) => (
             <div
               key={i}
-              className="min-w-[280px] shrink-0 rounded-2xl border border-blush/20 bg-cream p-6 lg:min-w-0"
+              className="min-w-[320px] shrink-0 rounded-2xl border border-charcoal/5 bg-white p-8 shadow-[0_2px_20px_-5px_rgba(26,26,26,0.06)] transition-all duration-300 hover:shadow-[0_10px_30px_-10px_rgba(26,26,26,0.1)] lg:min-w-0"
             >
               <Stars />
-              <p className="mt-4 text-sm leading-relaxed text-charcoal">
+              <p className="mt-6 text-sm leading-relaxed text-charcoal">
                 &ldquo;{r.text}&rdquo;
               </p>
-              <p className="mt-4 text-sm font-semibold text-charcoal">
+              <p className="mt-6 text-sm font-semibold tracking-wide text-charcoal">
                 {r.name}
               </p>
-              <p className="text-xs text-muted">— via Google Reviews</p>
+              <p className="mt-1 text-xs text-muted">— via Google Reviews</p>
             </div>
           ))}
         </div>
@@ -469,7 +533,10 @@ function ReviewsSection() {
 
 function Stars() {
   return (
-    <div className="star-gold flex gap-0.5 text-lg" aria-label="5 out of 5 stars">
+    <div
+      className="star-gold flex gap-0.5 text-lg"
+      aria-label="5 out of 5 stars"
+    >
       {Array.from({ length: 5 }).map((_, i) => (
         <span key={i}>★</span>
       ))}
@@ -483,28 +550,29 @@ function Stars() {
 
 function BookingSection() {
   return (
-    <section id="booking" className="scroll-mt-20 bg-cream py-20 md:py-28">
-      <div className="mx-auto max-w-4xl px-5 md:px-8">
+    <section id="booking" className="scroll-mt-20 bg-cream py-24 md:py-32">
+      <div className="mx-auto max-w-4xl px-6 md:px-10">
         <div className="animate-on-scroll text-center">
-          <h2 className="font-heading text-3xl font-semibold text-charcoal sm:text-4xl">
+          <p className="text-xs font-medium uppercase tracking-[0.25em] text-muted">
+            Reserve your spot
+          </p>
+          <h2 className="mt-4 font-heading text-4xl font-normal tracking-tight text-charcoal sm:text-5xl">
             Ready to Glow?
           </h2>
-          <p className="mt-3 text-muted">
+          <p className="mt-6 text-muted">
             Book your appointment online in just a few clicks
           </p>
         </div>
 
-        {/* TODO: Add Calendly URL — Calendly inline embed */}
-        <div className="animate-on-scroll mt-10 overflow-hidden rounded-2xl bg-white shadow-sm">
+        <div className="animate-on-scroll mt-12 overflow-hidden rounded-2xl border border-charcoal/5 bg-white shadow-[0_2px_30px_-10px_rgba(26,26,26,0.1)]">
           <iframe
             src="https://calendly.com/welcome2wellness"
             title="Book an appointment"
             className="w-full border-0"
             style={{ minHeight: "700px" }}
           />
-          {/* Fallback if Calendly doesn't load */}
           <noscript>
-            <div className="p-10 text-center">
+            <div className="p-12 text-center">
               <p className="text-muted">
                 Unable to load the booking widget. Please visit our booking page
                 directly.
@@ -513,7 +581,7 @@ function BookingSection() {
                 href="https://calendly.com/welcome2wellness"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 inline-block rounded-full bg-gold px-8 py-3 text-sm font-semibold text-white"
+                className="mt-6 inline-block rounded-full bg-gold px-10 py-3.5 text-sm font-semibold text-white"
               >
                 Book on Calendly
               </a>
@@ -531,14 +599,16 @@ function BookingSection() {
 
 function ContactSection() {
   return (
-    <section id="contact" className="scroll-mt-20 bg-white py-20 md:py-28">
-      <div className="animate-on-scroll mx-auto grid max-w-6xl gap-10 px-5 md:grid-cols-2 md:px-8">
-        {/* Left — Info */}
+    <section id="contact" className="scroll-mt-20 bg-ivory py-24 md:py-32">
+      <div className="animate-on-scroll mx-auto grid max-w-6xl gap-12 px-6 md:grid-cols-2 md:px-10">
         <div>
-          <h2 className="font-heading text-3xl font-semibold text-charcoal sm:text-4xl">
+          <p className="text-xs font-medium uppercase tracking-[0.25em] text-muted">
+            Find us
+          </p>
+          <h2 className="mt-4 font-heading text-4xl font-normal tracking-tight text-charcoal sm:text-5xl">
             Visit Us
           </h2>
-          <div className="mt-6 space-y-4 text-sm leading-relaxed text-muted">
+          <div className="mt-8 space-y-5 text-sm leading-relaxed text-muted">
             <p className="font-semibold text-charcoal">
               Canadian Wellness &amp; Beauty
             </p>
@@ -550,17 +620,16 @@ function ContactSection() {
             <p>
               <a
                 href="tel:2368802992"
-                className="text-gold transition-colors hover:underline"
+                className="font-medium text-gold transition-colors hover:underline"
               >
                 236-880-2992
               </a>
             </p>
-            {/* TODO: Add business hours */}
             <p>
-              <span className="font-medium text-charcoal">Hours:</span>{" "}
-              Mon–Sat 10 AM – 7 PM &nbsp;|&nbsp; Sun Closed
+              <span className="font-medium text-charcoal">Hours:</span> Mon–Sat
+              10 AM – 7 PM &nbsp;|&nbsp; Sun Closed
             </p>
-            <div className="flex gap-4 pt-2">
+            <div className="flex gap-6 pt-4">
               <a
                 href="#"
                 aria-label="Facebook"
@@ -583,8 +652,7 @@ function ContactSection() {
           </div>
         </div>
 
-        {/* Right — Map */}
-        <div className="overflow-hidden rounded-2xl">
+        <div className="overflow-hidden rounded-2xl border border-charcoal/5 shadow-[0_2px_30px_-10px_rgba(26,26,26,0.08)]">
           <iframe
             title="Canadian Wellness & Beauty location"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2605.3!2d-122.9878!3d49.2244!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDnCsDEzJzI3LjgiTiAxMjLCsDU5JzE2LjAiVw!5e0!3m2!1sen!2sca!4v1700000000000"
@@ -607,29 +675,38 @@ function ContactSection() {
 
 function Footer() {
   return (
-    <footer className="bg-charcoal py-12 text-center text-sm text-white/70">
-      <div className="mx-auto max-w-6xl px-5 md:px-8">
-        <p className="font-heading text-2xl font-semibold text-white">
+    <footer className="border-t border-charcoal/5 bg-charcoal py-16 text-center">
+      <div className="mx-auto max-w-6xl px-6 md:px-10">
+        <p className="font-heading text-3xl font-normal tracking-tight text-ivory">
           Canadian Wellness &amp; Beauty
         </p>
-        <p className="mt-2 italic text-white/50">
+        <p className="mt-3 text-sm italic text-white/50">
           Your beauty, our passion.
         </p>
-        <div className="mt-6 flex justify-center gap-6">
-          <a href="#services" className="transition-colors hover:text-gold">
+        <div className="mt-8 flex justify-center gap-10">
+          <a
+            href="#services"
+            className="text-sm font-medium tracking-wide text-white/70 transition-colors hover:text-gold"
+          >
             Services
           </a>
-          <a href="#booking" className="transition-colors hover:text-gold">
+          <a
+            href="#booking"
+            className="text-sm font-medium tracking-wide text-white/70 transition-colors hover:text-gold"
+          >
             Book Now
           </a>
-          <a href="#contact" className="transition-colors hover:text-gold">
+          <a
+            href="#contact"
+            className="text-sm font-medium tracking-wide text-white/70 transition-colors hover:text-gold"
+          >
             Contact
           </a>
         </div>
-        <p className="mt-8 text-xs text-white/40">
+        <p className="mt-12 text-xs text-white/40">
           © 2025 Canadian Wellness &amp; Beauty. All rights reserved.
         </p>
-        <p className="mt-1 text-xs text-white/40">
+        <p className="mt-2 text-xs text-white/40">
           #208 - 7877B Kingsway, Burnaby, BC &nbsp;|&nbsp; 236-880-2992
         </p>
       </div>
